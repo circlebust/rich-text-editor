@@ -31,13 +31,15 @@ const baseConfig = {
   output: {
     path: DIST,
     filename: '[name].js',
-    publicPath: "/"
+    publicPath: "/",
+    libraryTarget: 'commonjs2',
+
     //library: '[name]',
-    //libraryTarget: 'umd',
+    //libraryTarget: 'umd', libraryTarget: 'commonjs2',
     //
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx' ],
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.html' ],
     plugins: [
       new TSConfigPaths(), //{ configFile: path.join(__dirname, './tsconfig.json')}),
     ],

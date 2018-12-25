@@ -1,11 +1,13 @@
-import { Editor } from 'slate-react'
-import { Value } from 'slate'
+import { Editor } from 'slate-react';
+import { Value } from 'slate';
+import React from 'react';
+//import initialValue from './value.json'
+import initialValue from '../value.json';
+import { EDITOR } from '../initialValues';
+import { isKeyHotkey } from 'is-hotkey';
+import { Button, Icon, Toolbar } from './components';
 
-import React from 'react'
-import initialValue from './value.json'
-import { isKeyHotkey } from 'is-hotkey'
-import { Button, Icon, Toolbar } from '../components'
-
+//const initalValue = () => fs.readJsonSync("./value.json");
 /**
  * Define the default node type.
  *
@@ -25,21 +27,39 @@ const isItalicHotkey = isKeyHotkey('mod+i')
 const isUnderlinedHotkey = isKeyHotkey('mod+u')
 const isCodeHotkey = isKeyHotkey('mod+`')
 
+function getValue(initVal){ 
+  console.log("getValue", initVal, typeof initVal);
+  const v = Value.isValue(initVal)
+  console.log("isValue", v);
+  const c = Value.create(initVal);
+  console.log("isValue2",Value.isValue(c), c);
+  return c;
+  //return Value.fromJSON({ data: JSON.stringify(initVal) });
+}
 /**
  * The rich text example.
  *
  * @type {Component}
  */
 
-class RichTextExample extends React.Component {
+ interface IProps {
+   editor: Editor | any;
+ }
+ type RProps = {
+  editor: any
+}
+class RichTextExample extends React.Component<IProps> {
   /**
    * Deserialize the initial editor value.
    *
    * @type {Object}
    */
-
+  set editor(editor){ this.state.editor = editor }
+  get editor(){ return this.state.editor }
+  //props = { editor: {} }
   state = {
-    value: Value.fromJSON(initialValue),
+    value: getValue(EDITOR),
+    editor: null
   }
 
   /**
@@ -49,7 +69,7 @@ class RichTextExample extends React.Component {
    * @return {Boolean}
    */
 
-  hasMark = type => {
+  hasMark = (type) => {
     const { value } = this.state
     return value.activeMarks.some(mark => mark.type == type)
   }
@@ -72,8 +92,8 @@ class RichTextExample extends React.Component {
    * @param {Editor} editor
    */
 
-  ref = editor => {
-    this.editor = editor
+  ref = (editor) => {
+    this.editor = editor;
   }
 
   /**
@@ -148,7 +168,7 @@ class RichTextExample extends React.Component {
 
       if (blocks.size > 0) {
         const parent = document.getParent(blocks.first().key)
-        isActive = this.hasBlock('list-item') && parent && parent.type === type
+        isActive = this.hasBlock('list-item') && parent && parent["type"] && parent["type"] === type
       }
     }
 

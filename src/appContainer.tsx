@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState, useReducer} from 'react';
 import styled from '@emotion/styled';
 import {
   HashRouter,
@@ -32,7 +32,8 @@ import SyncingOperations from './syncing-operations'
 import Tables from './tables'
 import Mentions from './mentions'
 */
-import RichText from './rich-text'
+import RichText from './components/RichText';
+import { isNull } from 'util';
 
 
 /**
@@ -41,11 +42,24 @@ import RichText from './rich-text'
  * @type {Array}
  */
 
-const EXAMPLES = [
-  ['Rich Text', RichText, '/rich-text']
-]
-const mapComponents = () => 
+const components = [
+  { name: 'Rich Text', component: RichText, path: '/rich-text' }
+];
 
+
+
+const routeContainer = ({ path }) => (
+  <Route key={path} exact path={path}>
+    {({ match }) => (
+      <Tab to={path} active={match && match.isExact}>{name}</Tab>
+    )}
+  </Route>
+);
+ 
+
+const mapComponents = () => components.map(
+  ({ name, component, path }) => routeContainer({ path })
+);
 /**
  * Some styled components.
  *
@@ -88,7 +102,7 @@ const TabList = styled('div')`
   }
 `
 
-const MaskedRouterLink = ({ active, ...props }) => <RouterLink {...props} />
+const MaskedRouterLink = ({ active, ...props }) => <RouterLink to={""} {...props} />
 
 const Tab = styled(MaskedRouterLink)`
   display: inline-block;
@@ -124,14 +138,17 @@ const Warning = styled(Wrapper)`
     margin-bottom: 0;
   }
 `
-
+//const getError = () => useState(this.state);
 /**
  * App.
  *
  * @type {Component}
  */
-
-export default class App extends React.Component {
+interface IState { 
+  error:  { [k:string]: any; stack: any } | null; 
+  info:  { stack: any} | null;  
+}
+export default class App extends React.Component<{}, IState> {
   /**
    * Initial state.
    *
@@ -139,8 +156,22 @@ export default class App extends React.Component {
    */
 
   state = {
-    error: null,
-    info: null,
+    error: null, //{ stack: null},
+    info:  null //{ stack: null},
+  }
+  //constructor(props,state){super(props); this.setState(state)}
+  /*
+  getError = () => { 
+    const err = this.state.error;
+    if(err !=== null){ }
+    return (this.state.error === null) ? null : this.state.error.stack; //["stack"];
+*/
+  componentDidMount(){
+    this.setState({
+      error: { stack: null },
+      info: { stack: null },
+    });
+    console.log("state", this.state);
   }
 
   /**
@@ -154,12 +185,48 @@ export default class App extends React.Component {
     this.setState({ error, info })
   }
 
+  renderWarning(){
+    console.log("RENDER renderWarning", this.state);
+    return (
+      <Warning>
+        <p>
+          An error was thrown by one of the example's React components!
+        </p>
+        <pre>
+          <code>
+            {this.state.error["stack"]}
+            {'\n'}
+            {this.state.info["stack"]}
+          </code>
+        </pre>
+      </Warning>
+    )
+  }
+
   /**
    * Render the example app.
    *
    * @return {Element}
    */
+  renderExample(){
+    console.log("RENDER EXAMPLE", this.state);
+    return (
+      <Example>
+        <Switch>
+          {components.map(
+            ({ name, component, path }) => <Route key={path} path={path} component={component} />
+          )}
+          <Redirect from="/" to="/rich-text" />
+        </Switch>
+      </Example>
+    )
+  }
 
+    /**
+   * Render the example app.
+   *
+   * @return {Element}
+   */
   render() {
     return (
       <HashRouter>
@@ -172,39 +239,11 @@ export default class App extends React.Component {
             </LinkList>
           </Nav>
           <TabList>
-            {EXAMPLES.map(([name, Component, path]) => (
-              <Route key={path} exact path={path}>
-                {({ match }) => (
-                  <Tab to={path} active={match && match.isExact}>
-                    {name}
-                  </Tab>
-                )}
-              </Route>
-            ))}
+            {components.map(
+              ({ name, component, path }) => routeContainer({ path })
+            )}
           </TabList>
-          {this.state.error ? (
-            <Warning>
-              <p>
-                An error was thrown by one of the example's React components!
-              </p>
-              <pre>
-                <code>
-                  {this.state.error.stack}
-                  {'\n'}
-                  {this.state.info.componentStack}
-                </code>
-              </pre>
-            </Warning>
-          ) : (
-            <Example>
-              <Switch>
-                {EXAMPLES.map(([name, Component, path]) => (
-                  <Route key={path} path={path} component={Component} />
-                ))}
-                <Redirect from="/" to="/rich-text" />
-              </Switch>
-            </Example>
-          )}
+          {this.renderExample()}
         </div>
       </HashRouter>
     )

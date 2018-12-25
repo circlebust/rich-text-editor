@@ -1,12 +1,12 @@
-import React from 'react'
-import styled from 'react-emotion'
+import React from 'react';
+import styled from '@emotion/styled';
 
-export const Button = styled('span')`
+type E = { active: any }
+export const Button = styled('span')<E>`
   cursor: pointer;
-  color: ${props =>
-    props.reversed
-      ? props.active ? 'white' : '#aaa'
-      : props.active ? 'black' : '#ccc'};
+  color: ${(props) => props["reversed"]
+      ? props["active"] ? 'white' : '#aaa'
+      : props["active"] ? 'black' : '#ccc'};
 `
 
 export const Icon = styled(({ className, ...rest }) => {

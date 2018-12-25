@@ -32,7 +32,7 @@ const baseConfig = {
     path: DIST,
     filename: '[name].js',
     publicPath: "/",
-    libraryTarget: 'commonjs2',
+    libraryTarget: 'umd2',
 
     //library: '[name]',
     //libraryTarget: 'umd', libraryTarget: 'commonjs2',

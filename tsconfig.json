@@ -13,6 +13,7 @@
     "lib": ["es2015", "es2017", "dom", "es6", "dom.iterable"],
     
     "jsx": "react", 
+    "resolveJsonModule": true,
 
     "allowJs": true,
 
@@ -20,7 +21,7 @@
     //"noImplicitThis": true,
 
     //"noUnusedLocals": true,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "noImplicitAny": false,
     "removeComments": true,
     "noLib": false,

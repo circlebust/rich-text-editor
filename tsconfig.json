@@ -1,0 +1,61 @@
+{
+  "compileOnSave": true,
+
+  "compilerOptions": {
+    "watch": true,
+    "noErrorTruncation": true,
+
+    //"resolveJsonModule": true,
+    
+    "moduleResolution": "node",
+    "module": "esnext",
+    "target": "es2015",
+    "lib": ["es2015", "es2017", "dom", "es6", "dom.iterable"],
+    
+    "jsx": "react", 
+
+    "allowJs": true,
+
+    "preserveConstEnums": true,
+    //"noImplicitThis": true,
+
+    //"noUnusedLocals": true,
+    "strictNullChecks": true,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "noLib": false,
+    "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "suppressImplicitAnyIndexErrors": true,
+
+    "sourceMap": true,
+    "inlineSourceMap": false,
+    //"inlineSources": true,
+    "alwaysStrict": true,
+    "downlevelIteration": true,
+    //"stripInternal": true,
+    //"importHelpers": true,
+    "declaration": false,
+    //"declarationDir": "./dist/typings/",
+    //"rootDir": "./src/",
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "*": [ "*" ],
+      //"@app/*" : [ "./src/app/*"],
+      //"@shared/*" : [ "./../../shared/*"],
+    }
+  },
+
+  "include": [ "./src/**/*"
+    //"./src/**/*",
+    //"./typings/**/*"
+    //"./../typings/**/*",
+    //"./../typings/thenable.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
+}

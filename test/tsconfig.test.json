@@ -1,0 +1,25 @@
+{
+  "extends":"../tsconfig.json",
+
+  "compilerOptions": {
+    "watch": true,
+    "noErrorTruncation": true,
+    "diagnostics": true,
+    "noImplicitAny": false,
+ 
+    "baseUrl": ".",
+    "paths": {
+      "*": [ "*" ],
+      "@app/*" : [ "../src/app/*"],
+      "@shared/*" : [ "../../../shared/*"],
+    }
+  },
+
+  "include": [
+    "./src/**/*",
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
+}

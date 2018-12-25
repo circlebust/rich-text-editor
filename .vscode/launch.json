@@ -1,0 +1,35 @@
+{ "version": "0.2.0", "configurations": [
+
+    {
+        "name": "launch nodemon",
+        "type": "node", 
+        "request": "launch", 
+        "protocol": "inspector",
+        "runtimeExecutable": "nodemon",
+        "runtimeArgs": [ "--config", "${workspaceFolder}/nodemon.json" ], //, "./test1", "./test2" ],
+        //-r tsconfig-paths/register -r ts-node/register packages/core/src/main.ts
+        //"program": "${workspaceFolder}/index.js",
+        "autoAttachChildProcesses": true,
+        "stopOnEntry": true,
+        //"restart": true,
+        
+        //"runtimeArgs": [ "--inspect" ], //, "./test1", "./test2" ],
+        //"console": "integratedTerminal",
+        //"internalConsoleOptions": "openOnSessionStart",
+        //"trace": true,
+        "cwd": "${workspaceFolder}",
+        
+    }
+    , { 
+        "type": "node", "request": 
+        "attach",    
+        "name": "attach node",
+        "processId": "${command:PickProcess}",
+        "protocol": "inspector",
+        "restart": true,
+        //"stopOnEntry": false,
+        //"internalConsoleOptions": "neverOpen",
+        //"cwd": "${workspaceFolder}",
+    }
+ 
+]}

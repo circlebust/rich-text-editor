@@ -1,0 +1,45 @@
+{ "version": "2.0.0", 
+    "presentation": { 
+        "reveal": "always",
+        "focus": true, 
+        "panel": "dedicated"
+    },
+    "options": {
+        "cwd": "${workspaceFolder}"
+    },
+    //"type": "npm",
+    "tasks": [
+        {
+            "label": "start", "type": "npm",
+            "script": "start"
+        },
+        {
+            "label": "run", "type": "npm",
+            "script": "run"
+        },
+        {
+            "label": "build", "type": "npm",
+            "script": "build"
+        },
+        {
+            "label": "build:alt", "type": "npm",
+            "script": "build:alt"
+        },
+        {
+            "label": "build:bundle", "type": "npm",
+            "script": "build:bundle"
+        },
+        {
+            "label": "build:compile", "type": "npm",
+            "script": "build:compile"
+        },
+        {
+            "label": "test", "type": "npm",
+            "script": "test"
+        },
+        {
+            "label": "serve", "type": "npm",
+            "script": "serve"
+        }
+    ]
+}

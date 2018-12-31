@@ -8,12 +8,17 @@ import {
   Switch,
 } from 'react-router-dom';
 import RichText from './RichText';
-import { Nav, Title, 
-  TabList, Link, LinkList, 
-  Toolbar, Icon, Menu, Button,
-  MaskedRouterLink, Tab, Wrapper
-
-} from './smallComponents';
+import { Button } from './Button';
+import { Wrapper } from "./Wrapper";
+import { Tab } from "./Tab";
+import { MaskedRouterLink } from "./MaskedRouterLink";
+import { TabList } from "./TabList";
+import { Link } from "./Link";
+import { LinkList } from "./LinkList";
+import { Title } from "./Title";
+import { Nav } from "./Nav";
+import { Toolbar } from "./Toolbar";
+import { Icon } from "./Icon";
 
 
 
@@ -96,12 +101,7 @@ export default class EditorApp extends React.Component<{}, IState> {
     )
   }
 
-  /**
-   * Render the example app.
-   *
-   * @return {Element}
-   */
-  renderExample(){
+  renderExample(): JSX.Element {
     console.log("RENDER EXAMPLE", this.state);
     return (
       <Example>

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import EditorApp from './components/EditorApp';
-import { GlobalStyle } from './components/globalStyle';
+import { GlobalStyle } from './components/GlobalStyle';
 
 
 

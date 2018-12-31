@@ -6,3 +6,5 @@ export const Wrapper = styled('div')`
   margin: 0 auto 20px;
   padding: 20px;
 `;
+
+export default Wrapper;

@@ -1,4 +1,4 @@
-export const EDITOR = {
+export const initialValue = {
   "document": {
     "nodes": [
       {

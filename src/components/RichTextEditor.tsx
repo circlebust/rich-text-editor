@@ -1,92 +1,57 @@
+import React from 'react';
 import { Editor } from 'slate-react';
 import { Value } from 'slate';
-import React from 'react';
-//import initialValue from './value.json'
-import initialValue from '../value.json';
-import { EDITOR } from '../initialValues';
+import { initialValue } from '@app/appconfig';
 import { isKeyHotkey } from 'is-hotkey';
-import { Button } from './Button';
-import { Icon } from './Icon';
+import { Button, Icon, Toolbar} from "@app/components";
 
-import { Toolbar } from "./Toolbar";
-
-//const initalValue = () => fs.readJsonSync("./value.json");
-/**
- * Define the default node type.
- *
- * @type {String}
- */
-
-const DEFAULT_NODE = 'paragraph'
+const DEFAULT_NODE = 'paragraph';
 
 /**
  * Define hotkey matchers.
  *
- * @type {Function}
  */
+const isBoldHotkey = isKeyHotkey('mod+b');
+const isItalicHotkey = isKeyHotkey('mod+i');
+const isUnderlinedHotkey = isKeyHotkey('mod+u');
+const isCodeHotkey = isKeyHotkey('mod+`');
 
-const isBoldHotkey = isKeyHotkey('mod+b')
-const isItalicHotkey = isKeyHotkey('mod+i')
-const isUnderlinedHotkey = isKeyHotkey('mod+u')
-const isCodeHotkey = isKeyHotkey('mod+`')
-
-function getValue(initVal){ 
-  console.log("getValue", initVal, typeof initVal);
-  const v = Value.isValue(initVal)
-  console.log("isValue", v);
-  const c = Value.create(initVal);
-  console.log("isValue2",Value.isValue(c), c);
-  return c;
-  //return Value.fromJSON({ data: JSON.stringify(initVal) });
+//const initalValue = () => fs.readJsonSync("./value.json");
+const getInitialValue = (init) => {
+  try {
+    if (Value.isValue(init)){
+      return init
+    } else {
+      return Value.create(init);
+    }
+  } catch(err){ console.error(err); }
 }
-/**
- * The rich text example.
- *
- * @type {Component}
- */
 
- interface IProps {
-   editor: Editor | any;
- }
- type RProps = {
-  editor: any
-}
-class RichTextExample extends React.Component<IProps> {
-  /**
-   * Deserialize the initial editor value.
-   *
-   * @type {Object}
-   */
+
+export class RichTextEditor extends React.Component<{ editor: Editor | any; }> {
+
   set editor(editor){ this.state.editor = editor }
   get editor(){ return this.state.editor }
-  //props = { editor: {} }
+
   state = {
-    value: getValue(EDITOR),
+    value: getInitialValue(initialValue),
     editor: null
   }
 
   /**
    * Check if the current selection has a mark with `type` in it.
-   *
-   * @param {String} type
-   * @return {Boolean}
    */
-
-  hasMark = (type) => {
+  hasMark = (type: string) => {
     const { value } = this.state
-    return value.activeMarks.some(mark => mark.type == type)
+    return value.activeMarks.some(mark => mark.type === type)
   }
 
   /**
    * Check if the any of the currently selected blocks are of `type`.
-   *
-   * @param {String} type
-   * @return {Boolean}
    */
-
-  hasBlock = type => {
+  hasBlock = (type: string) => {
     const { value } = this.state
-    return value.blocks.some(node => node.type == type)
+    return value.blocks.some(node => node.type === type)
   }
 
   /**
@@ -94,16 +59,9 @@ class RichTextExample extends React.Component<IProps> {
    *
    * @param {Editor} editor
    */
-
   ref = (editor) => {
     this.editor = editor;
   }
-
-  /**
-   * Render.
-   *
-   * @return {Element}
-   */
 
   render() {
     return (
@@ -136,14 +94,9 @@ class RichTextExample extends React.Component<IProps> {
 
   /**
    * Render a mark-toggling toolbar button.
-   *
-   * @param {String} type
-   * @param {String} icon
-   * @return {Element}
    */
-
-  renderMarkButton = (type, icon) => {
-    const isActive = this.hasMark(type)
+  renderMarkButton = (type: string, icon: string) => {
+    const isActive = this.hasMark(type);
 
     return (
       <Button
@@ -157,14 +110,9 @@ class RichTextExample extends React.Component<IProps> {
 
   /**
    * Render a block-toggling toolbar button.
-   *
-   * @param {String} type
-   * @param {String} icon
-   * @return {Element}
    */
-
-  renderBlockButton = (type, icon) => {
-    let isActive = this.hasBlock(type)
+  renderBlockButton = (type: string, icon: string) => {
+    let isActive = this.hasBlock(type);
 
     if (['numbered-list', 'bulleted-list'].includes(type)) {
       const { value: { document, blocks } } = this.state
@@ -185,15 +133,8 @@ class RichTextExample extends React.Component<IProps> {
     )
   }
 
-  /**
-   * Render a Slate node.
-   *
-   * @param {Object} props
-   * @return {Element}
-   */
-
-  renderNode = (props, editor, next) => {
-    const { attributes, children, node } = props
+  renderNode = (props: any, editor, next) => {
+    const { attributes, children, node } = props;
 
     switch (node.type) {
       case 'block-quote':
@@ -209,18 +150,14 @@ class RichTextExample extends React.Component<IProps> {
       case 'numbered-list':
         return <ol {...attributes}>{children}</ol>
       default:
-        return next()
+        return next();
     }
   }
 
   /**
    * Render a Slate mark.
-   *
-   * @param {Object} props
-   * @return {Element}
    */
-
-  renderMark = (props, editor, next) => {
+  renderMark = (props: any, editor, next) => {
     const { children, mark, attributes } = props
 
     switch (mark.type) {
@@ -233,7 +170,7 @@ class RichTextExample extends React.Component<IProps> {
       case 'underlined':
         return <u {...attributes}>{children}</u>
       default:
-        return next()
+        return next();
     }
   }
 
@@ -242,9 +179,8 @@ class RichTextExample extends React.Component<IProps> {
    *
    * @param {Editor} editor
    */
-
   onChange = ({ value }) => {
-    this.setState({ value })
+    this.setState({ value });
   }
 
   /**
@@ -254,24 +190,23 @@ class RichTextExample extends React.Component<IProps> {
    * @param {Editor} editor
    * @return {Change}
    */
-
   onKeyDown = (event, editor, next) => {
-    let mark
+    let mark;
 
     if (isBoldHotkey(event)) {
-      mark = 'bold'
+      mark = 'bold';
     } else if (isItalicHotkey(event)) {
-      mark = 'italic'
+      mark = 'italic';
     } else if (isUnderlinedHotkey(event)) {
-      mark = 'underlined'
+      mark = 'underlined';
     } else if (isCodeHotkey(event)) {
-      mark = 'code'
+      mark = 'code';
     } else {
-      return next()
+      return next();
     }
 
-    event.preventDefault()
-    editor.toggleMark(mark)
+    event.preventDefault();
+    editor.toggleMark(mark);
   }
 
   /**
@@ -282,8 +217,8 @@ class RichTextExample extends React.Component<IProps> {
    */
 
   onClickMark = (event, type) => {
-    event.preventDefault()
-    this.editor.toggleMark(type)
+    event.preventDefault();
+    this.editor.toggleMark(type);
   }
 
   /**
@@ -294,7 +229,7 @@ class RichTextExample extends React.Component<IProps> {
    */
 
   onClickBlock = (event, type) => {
-    event.preventDefault()
+    event.preventDefault();
 
     const { editor } = this
     const { value } = editor
@@ -309,37 +244,33 @@ class RichTextExample extends React.Component<IProps> {
         editor
           .setBlocks(isActive ? DEFAULT_NODE : type)
           .unwrapBlock('bulleted-list')
-          .unwrapBlock('numbered-list')
+          .unwrapBlock('numbered-list');
       } else {
-        editor.setBlocks(isActive ? DEFAULT_NODE : type)
+        editor.setBlocks(isActive ? DEFAULT_NODE : type);
       }
     } else {
       // Handle the extra wrapping required for list buttons.
-      const isList = this.hasBlock('list-item')
+      const isList = this.hasBlock('list-item');
       const isType = value.blocks.some(block => {
         return !!document.getClosest(block.key, parent => parent.type == type)
-      })
+      });
 
       if (isList && isType) {
         editor
           .setBlocks(DEFAULT_NODE)
           .unwrapBlock('bulleted-list')
-          .unwrapBlock('numbered-list')
+          .unwrapBlock('numbered-list');
       } else if (isList) {
         editor
           .unwrapBlock(
             type == 'bulleted-list' ? 'numbered-list' : 'bulleted-list'
           )
-          .wrapBlock(type)
+          .wrapBlock(type);
       } else {
-        editor.setBlocks('list-item').wrapBlock(type)
+        editor.setBlocks('list-item').wrapBlock(type);
       }
     }
   }
 }
 
-/**
- * Export.
- */
-
-export default RichTextExample
+export default RichTextEditor;

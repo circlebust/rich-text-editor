@@ -1,5 +1,4 @@
 import React,{useState, useReducer} from 'react';
-import styled from '@emotion/styled';
 import {
   HashRouter,
   Link as RouterLink,
@@ -7,64 +6,27 @@ import {
   Redirect,
   Switch,
 } from 'react-router-dom';
-import RichText from './RichText';
-import { Button } from './Button';
-import { Wrapper } from "./Wrapper";
-import { Tab } from "./Tab";
-import { MaskedRouterLink } from "./MaskedRouterLink";
-import { TabList } from "./TabList";
-import { Link } from "./Link";
-import { LinkList } from "./LinkList";
-import { Title } from "./Title";
-import { Nav } from "./Nav";
-import { Toolbar } from "./Toolbar";
-import { Icon } from "./Icon";
-
-
+import { Button, MaskedRouterLink, Toolbar, Icon, 
+  TabList, Link, LinkList, Title, Nav, 
+  Warning, Example, RouteContainer 
+} from './components';
+import { 
+  RichTextEditor
+} from './components';
 
 const components = [
-  { name: 'Rich Text', component: RichText, path: '/rich-text' }
+  { name: 'Rich Text Editor', component: RichTextEditor, path: '/rich-text' }
 ];
 
 
 
 
 
-const routeContainer = ({ path }) => (
-  <Route key={path} exact path={path}>
-    {({ match }) => (
-      <Tab to={path} active={match && match.isExact}>{name}</Tab>
-    )}
-  </Route>
-);
- 
-
-
-const Example = styled(Wrapper)`
-  background: #fff;
-`
-
-const Warning = styled(Wrapper)`
-  background: #fffae0;
-
-  & > pre {
-    background: #fbf1bd;
-    white-space: pre;
-    overflow-x: scroll;
-    margin-bottom: 0;
-  }
-` 
-
 interface IState { 
   error:  { [k:string]: any; stack: any } | null; 
   info:  { stack: any} | null;  
 }
-export default class EditorApp extends React.Component<{}, IState> {
-  /**
-   * Initial state.
-   *
-   * @type {Object}
-   */
+class App extends React.Component<{}, IState> {
 
   state = {
     error: null, //{ stack: null},
@@ -76,7 +38,7 @@ export default class EditorApp extends React.Component<{}, IState> {
       error: { stack: null },
       info: { stack: null },
     });
-    console.log("state", this.state);
+    //console.log("state", this.state);
   }
 
   componentDidCatch(error, info) {
@@ -84,7 +46,7 @@ export default class EditorApp extends React.Component<{}, IState> {
   }
 
   renderWarning(){
-    console.log("RENDER renderWarning", this.state);
+    console.log("RENDER WARNING:", this.state);
     return (
       <Warning>
         <p>
@@ -101,8 +63,8 @@ export default class EditorApp extends React.Component<{}, IState> {
     )
   }
 
-  renderExample(): JSX.Element {
-    console.log("RENDER EXAMPLE", this.state);
+  renderExample(){
+    console.log("RENDER EXAMPLE:", this.state);
     return (
       <Example>
         <Switch>
@@ -128,7 +90,7 @@ export default class EditorApp extends React.Component<{}, IState> {
           </Nav>
           <TabList>
             {components.map(
-              ({ name, component, path }) => routeContainer({ path })
+              ({ name, component, path }) => RouteContainer({ path })
             )}
           </TabList>
           {this.renderExample()}
@@ -137,3 +99,5 @@ export default class EditorApp extends React.Component<{}, IState> {
     )
   }
 }
+
+export default App;

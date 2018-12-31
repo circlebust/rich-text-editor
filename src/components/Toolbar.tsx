@@ -9,3 +9,5 @@ export const Toolbar = styled(Menu)`
   border-bottom: 2px solid #eee;
   margin-bottom: 20px;
 `;
+
+export default Toolbar;

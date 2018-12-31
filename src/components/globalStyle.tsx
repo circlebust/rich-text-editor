@@ -106,3 +106,6 @@ input:focus {
   -moz-osx-font-smoothing: grayscale;
 }
 `;
+
+
+export default GlobalStyle;

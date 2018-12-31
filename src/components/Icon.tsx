@@ -8,3 +8,5 @@ export const Icon = styled(({ className, ...rest }) => {
     vertical-align: text-bottom;
 
 `;
+
+export default Icon;

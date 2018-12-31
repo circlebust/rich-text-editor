@@ -11,3 +11,5 @@ export const Link = styled('a')`
     text-decoration: underline;
   }
 `;
+
+export default Link;

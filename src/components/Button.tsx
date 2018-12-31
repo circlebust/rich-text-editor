@@ -8,8 +8,8 @@ export const Button = styled('span')<E>`
   color: ${(props) => props["reversed"]
       ? props["active"] ? 'white' : '#aaa'
       : props["active"] ? 'black' : '#ccc'};
-`
+`;
 
-
+export default Button;
 
 

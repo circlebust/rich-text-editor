@@ -9,4 +9,6 @@ export const Menu = styled('div')`
   & > * + * {
     margin-left: 15px;
   }
-`
+`;
+
+export default Menu;

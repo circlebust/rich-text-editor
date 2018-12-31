@@ -6,3 +6,5 @@ export const Nav = styled('div')`
   color: #aaa;
   background: #000;
 `;
+
+export default Nav;

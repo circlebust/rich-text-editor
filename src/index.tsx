@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import EditorApp from './components/EditorApp';
-import { GlobalStyle } from './components/GlobalStyle';
+import App from './App';
+import { GlobalStyle } from './components';
 
 
 
-const root = window.document.createElement('div')
-root.id = 'root'
-window.document.body.appendChild(root)
+const root = window.document.createElement('div');
+root.id = "root";
+window.document.body.appendChild(root);
 
 const render = Component => {
   ReactDOM.render(
@@ -22,12 +22,12 @@ const render = Component => {
   )
 }
 
-render(EditorApp)
+render(App);
 
 /**
  * Re-render for hot module replacement in development.
  */
 
 if (module["hot"]) {
-  module["hot"].accept('./app', () => render(EditorApp))
+  module["hot"].accept('./app', () => render(App))
 }

@@ -15,3 +15,5 @@ export const Tab = styled(MaskedRouterLink)`
     background: #333;
   }
 `;
+
+export default Tab;

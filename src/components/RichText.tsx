@@ -5,7 +5,7 @@ import React from 'react';
 import initialValue from '../value.json';
 import { EDITOR } from '../initialValues';
 import { isKeyHotkey } from 'is-hotkey';
-import { Button, Icon, Toolbar } from './components';
+import { Button, Icon, Toolbar } from './smallComponents';
 
 //const initalValue = () => fs.readJsonSync("./value.json");
 /**
